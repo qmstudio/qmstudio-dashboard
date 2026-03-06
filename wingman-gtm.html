@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wingman Project - QMStudio Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Helvetica Neue', 'Arial', sans-serif; }
+        body { background-color: #ffffff; margin: 0; }
+        .dashboard-title { font-family: 'Playfair Display', serif; font-weight: 400; letter-spacing: -0.02em; font-size: 4.5rem; line-height: 1; }
+    </style>
+</head>
+<body class="bg-white">
+    <div class="relative z-10">
+        <!-- Header -->
+        <div class="relative h-40 bg-cover bg-center" style="background-color: #404040;">
+            <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+            <div class="relative h-full flex flex-col justify-end px-12 py-8">
+                <h1 class="text-white mb-2 dashboard-title" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Wingman</h1>
+                <p class="text-xs uppercase tracking-widest text-gray-100">Privacy-First Meeting Assistant • Go-to-Market Launch</p>
+            </div>
+        </div>
+
+        <!-- BODY SECTION -->
+        <div style="background: linear-gradient(135deg, #cccccc 0%, #c9c9c9 50%, #cccccc 100%); padding-left: 40px; padding-right: 40px; width: 100%;">
+            <div class="bg-white" style="box-shadow: 0 10px 40px rgba(0,0,0,0.15);">
+                
+                <!-- Navigation -->
+                <div class="border-b border-gray-200 px-12 py-4">
+                    <div class="max-w-7xl mx-auto">
+                        <a href="preview-FRESH.html" class="text-sm text-blue-600 hover:text-blue-700 font-medium">← Back to Dashboard</a>
+                    </div>
+                </div>
+
+                <!-- Project Overview -->
+                <div class="border-b border-gray-200 px-12 py-20">
+                    <div class="max-w-7xl mx-auto">
+                        <div class="grid grid-cols-3 gap-8 mb-12">
+                            <div>
+                                <p class="text-xs uppercase tracking-widest text-gray-500 mb-2">Project Status</p>
+                                <p class="text-2xl font-bold text-gray-900 mb-2">Launch Planning</p>
+                                <span class="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded">New Project</span>
+                            </div>
+                            <div>
+                                <p class="text-xs uppercase tracking-widest text-gray-500 mb-2">Progress</p>
+                                <p class="text-2xl font-bold text-gray-900 mb-2" id="progress-count">0%</p>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-gray-900 h-2 rounded-full" id="progress-bar" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-xs uppercase tracking-widest text-gray-500 mb-2">Checklist Items</p>
+                                <p class="text-2xl font-bold text-gray-900 mb-2"><span id="completed-count">0</span> / <span id="total-count">0</span></p>
+                                <p class="text-xs text-gray-600">Items completed</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-8">
+                            <div>
+                                <p class="text-xs uppercase tracking-widest text-gray-500 mb-3">Description</p>
+                                <p class="text-sm text-gray-700 leading-relaxed">Privacy-first meeting assistant that transcribes conversations locally, generates intelligent summaries, and lets you highlight key moments to ask follow-up questions. Currently in development with go-to-market launch planned.</p>
+                            </div>
+                            <div>
+                                <p class="text-xs uppercase tracking-widest text-gray-500 mb-3">Key Features</p>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>• Local transcription (on-device privacy)</li>
+                                    <li>• AI-powered summaries</li>
+                                    <li>• Highlight & ask feature</li>
+                                    <li>• Multi-language support</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GTM Checklist -->
+                <div class="px-12 py-20">
+                    <div class="max-w-7xl mx-auto">
+                        <h2 class="text-xs uppercase tracking-widest text-gray-500 mb-12">Go-to-Market Checklist</h2>
+
+                        <!-- Legend -->
+                        <div class="grid grid-cols-3 gap-8 mb-12 pb-8 border-b border-gray-100">
+                            <div class="flex items-center gap-3">
+                                <span class="text-xs font-bold px-3 py-1 rounded bg-red-100 text-red-700">MUST</span>
+                                <p class="text-sm text-gray-600">Launch blocker</p>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-xs font-bold px-3 py-1 rounded bg-blue-100 text-blue-700">NICE</span>
+                                <p class="text-sm text-gray-600">Recommended</p>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-xs font-bold px-3 py-1 rounded bg-orange-100 text-orange-700">LEGAL</span>
+                                <p class="text-sm text-gray-600">Legal / compliance</p>
+                            </div>
+                        </div>
+
+                        <!-- Checklist Sections -->
+                        <div id="checklist-container" class="space-y-12"></div>
+
+                        <!-- Reset Button -->
+                        <div class="mt-12 pt-8 border-t border-gray-200">
+                            <button onclick="resetChecklist()" class="text-xs uppercase tracking-widest font-medium border border-gray-400 text-gray-700 px-6 py-2 rounded hover:bg-gray-50">↺ Reset All Checklist Items</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="border-t border-gray-200 px-12 py-12 bg-white">
+            <div class="max-w-7xl mx-auto text-xs text-gray-500">© 2026 QMStudio Management Dashboard</div>
+        </div>
+    </div>
+
+    <script>
+        const sections = [
+            {
+                title: "Website & Public Pages",
+                items: [
+                    { title: "Marketing / landing page", desc: "Hero, value prop, feature highlights, social proof, and a clear CTA to download or sign up.", tag: "must" },
+                    { title: "Product demo video or GIF", desc: "Show the live transcription + highlight-to-ask flow in action. Embed on the landing page.", tag: "must" },
+                    { title: "Pricing page", desc: "Free tier, paid plans, and what's included. Be explicit about local processing (privacy angle).", tag: "must" },
+                    { title: "FAQ page", desc: "Cover: which OS/apps it works with, privacy/data storage, accuracy, supported languages, offline use.", tag: "must" },
+                    { title: "About page", desc: "Who Quiet Machine is, the story behind Wingman, and why privacy-first matters.", tag: "nice" },
+                    { title: "Blog / changelog", desc: "Release notes and thought leadership content for SEO. Even a simple changelog counts.", tag: "nice" },
+                    { title: "Contact / support page", desc: "At minimum an email address or Tally form. Include a Discord/community link if applicable.", tag: "must" },
+                ]
+            },
+            {
+                title: "Auth & Onboarding",
+                items: [
+                    { title: "Sign-up page", desc: "Email + password, or OAuth (Google/GitHub). Keep friction minimal — consider a free trial without a credit card.", tag: "must" },
+                    { title: "Log-in page", desc: "Standard login with forgot-password flow.", tag: "must" },
+                    { title: "Email verification", desc: "Confirmation email after sign-up. Use a recognizable sender domain.", tag: "must" },
+                    { title: "Password reset flow", desc: "Reset-by-email with expiring token.", tag: "must" },
+                    { title: "Onboarding checklist / walkthrough", desc: "In-app first-run guide: set up audio source, add pre-session context, run a test transcription.", tag: "must" },
+                    { title: "Empty state UI", desc: "What users see before their first session — make it instructive, not just blank.", tag: "nice" },
+                ]
+            },
+            {
+                title: "Legal & Compliance",
+                items: [
+                    { title: "Privacy policy", desc: "Required by app stores, ad platforms, and most jurisdictions. Cover local processing, what (if any) data leaves the device, and retention.", tag: "legal" },
+                    { title: "Terms of service", desc: "Usage rules, IP ownership, acceptable use, disclaimers.", tag: "legal" },
+                    { title: "Cookie / consent banner", desc: "Required for EU/EEA visitors if you use any analytics or tracking cookies.", tag: "legal" },
+                    { title: "Data processing agreement (DPA)", desc: "Needed if you have B2B / enterprise customers in the EU.", tag: "legal" },
+                    { title: "EULA", desc: "End-user license agreement for the desktop app itself (separate from the web ToS).", tag: "legal" },
+                    { title: "Open-source license compliance", desc: "Audit all third-party libraries in the local runtime (Whisper, etc.) and honor their licenses.", tag: "legal" },
+                ]
+            },
+            {
+                title: "App Distribution",
+                items: [
+                    { title: "Mac App Store or direct DMG download", desc: "Decide on distribution method early — notarization requirements differ. Direct download is faster to ship.", tag: "must" },
+                    { title: "Windows installer (NSIS / MSI / MSIX)", desc: "If targeting Windows, sign the binary with a code-signing cert to avoid SmartScreen warnings.", tag: "must" },
+                    { title: "Auto-updater", desc: "Sparkle (Mac) or electron-updater so users get fixes without re-downloading.", tag: "must" },
+                    { title: "Version / release page", desc: "Public changelog users can reference before upgrading.", tag: "nice" },
+                    { title: "System requirements page", desc: "macOS version, CPU/RAM for on-device transcription, GPU notes if applicable.", tag: "must" },
+                ]
+            },
+            {
+                title: "User Account & Settings",
+                items: [
+                    { title: "Account / profile page", desc: "Edit name, email, password, billing info.", tag: "must" },
+                    { title: "Subscription & billing page", desc: "Current plan, next billing date, upgrade/downgrade, cancel flow. Integrate Stripe or LemonSqueezy.", tag: "must" },
+                    { title: "Session archive / history page", desc: "Browse past sessions, search transcripts, re-open summaries.", tag: "must" },
+                    { title: "Settings page", desc: "AI model preference, shortcut keys, transcription language, default context templates.", tag: "must" },
+                    { title: "Delete account flow", desc: "GDPR / CCPA require a clear way for users to delete their data.", tag: "legal" },
+                    { title: "Data export", desc: "Let users export transcripts and summaries as Markdown, PDF, or TXT.", tag: "nice" },
+                ]
+            },
+            {
+                title: "Support & Community",
+                items: [
+                    { title: "Help / knowledge base", desc: "Step-by-step guides: setting up audio, using the highlight feature, web search toggle, reviewing archives.", tag: "must" },
+                    { title: "In-app feedback widget", desc: "Quick thumbs up/down or a short feedback form so you capture issues early.", tag: "nice" },
+                    { title: "Bug report flow", desc: "GitHub Issues, Linear, or a simple form. Link from the app and the website.", tag: "must" },
+                    { title: "Community Discord or Slack", desc: "Great for early adopters. Doubles as support and product feedback channel.", tag: "nice" },
+                    { title: "Status page", desc: "Even for a local app, if you have cloud sync or the AI endpoint, show uptime.", tag: "nice" },
+                ]
+            },
+            {
+                title: "Launch & Growth",
+                items: [
+                    { title: "Product Hunt launch page", desc: "Hunter, tagline, first comment ready. Schedule for a Tuesday–Thursday launch.", tag: "nice" },
+                    { title: "Waitlist or early-access page", desc: "Capture emails before full launch. Connect to Loops, Mailchimp, or Resend.", tag: "nice" },
+                    { title: "Transactional emails", desc: "Welcome, password reset, receipt, session-ready notification, weekly digest.", tag: "must" },
+                    { title: "Referral or invite link", desc: "Simple 'share Wingman' link with UTM tracking to measure word-of-mouth.", tag: "nice" },
+                    { title: "Analytics / error tracking", desc: "Posthog or Plausible (privacy-friendly) for usage; Sentry for crash reporting.", tag: "must" },
+                    { title: "Social presence", desc: "At minimum a Twitter/X handle and a short bio. Link from the website footer.", tag: "nice" },
+                    { title: "Press kit", desc: "Logo files, screenshots, a one-paragraph company description for journalists and directories.", tag: "nice" },
+                ]
+            },
+        ];
+
+        const STORAGE_KEY = 'wingman-checklist-v1';
+
+        function loadState() {
+            try { 
+                return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; 
+            } catch { 
+                return {}; 
+            }
+        }
+
+        function saveState(state) {
+            try { 
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); 
+            } catch {}
+        }
+
+        let state = loadState();
+
+        function updateProgress() {
+            const all = document.querySelectorAll('[data-checklist-item]');
+            const checked = [...all].filter(el => el.classList.contains('checked'));
+            const total = all.length;
+            const count = checked.length;
+            
+            document.getElementById('completed-count').textContent = count;
+            document.getElementById('total-count').textContent = total;
+            const percent = total ? Math.round((count / total) * 100) : 0;
+            document.getElementById('progress-count').textContent = percent + '%';
+            document.getElementById('progress-bar').style.width = percent + '%';
+        }
+
+        function toggleItem(sectionIdx, itemIdx) {
+            const key = `${sectionIdx}-${itemIdx}`;
+            state[key] = !state[key];
+            saveState(state);
+            const el = document.querySelector(`[data-key="${key}"]`);
+            if (el) {
+                el.classList.toggle('checked', state[key]);
+            }
+            updateProgress();
+        }
+
+        function resetChecklist() {
+            if (!confirm('Reset all checklist items?')) return;
+            state = {};
+            saveState(state);
+            document.querySelectorAll('[data-checklist-item]').forEach(el => {
+                el.classList.remove('checked');
+            });
+            updateProgress();
+        }
+
+        const tagMap = { must: 'bg-red-100 text-red-700', nice: 'bg-blue-100 text-blue-700', legal: 'bg-orange-100 text-orange-700' };
+        const tagLabel = { must: 'MUST', nice: 'NICE', legal: 'LEGAL' };
+
+        const container = document.getElementById('checklist-container');
+
+        sections.forEach((sec, si) => {
+            const secDiv = document.createElement('div');
+            
+            const header = document.createElement('div');
+            header.className = 'mb-6';
+            header.innerHTML = `<h3 class="text-sm font-medium text-gray-900 uppercase tracking-widest">0${si + 1}. ${sec.title}</h3>`;
+            secDiv.appendChild(header);
+
+            const itemsDiv = document.createElement('div');
+            itemsDiv.className = 'space-y-2 border-l border-gray-300 pl-6 ml-2';
+
+            sec.items.forEach((item, ii) => {
+                const key = `${si}-${ii}`;
+                const isChecked = !!state[key];
+                
+                const itemEl = document.createElement('div');
+                itemEl.className = `flex items-start gap-4 p-4 rounded-lg border transition-all cursor-pointer ${isChecked ? 'bg-green-50 border-green-200 checked' : 'bg-white border-gray-200 hover:bg-gray-50'}`;
+                itemEl.dataset.key = key;
+                itemEl.dataset.checklistItem = true;
+                
+                itemEl.innerHTML = `
+                    <div class="flex-shrink-0 mt-1">
+                        <div class="w-5 h-5 border-2 rounded-md flex items-center justify-center transition-all ${isChecked ? 'bg-green-500 border-green-500' : 'border-gray-300'}">
+                            ${isChecked ? '<span class="text-white text-sm font-bold">✓</span>' : ''}
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm font-medium text-gray-900 ${isChecked ? 'line-through text-gray-500' : ''}">${item.title}</p>
+                        <p class="text-xs text-gray-600 mt-1">${item.desc}</p>
+                    </div>
+                    <span class="text-xs font-bold px-3 py-1 rounded flex-shrink-0 ${tagMap[item.tag]}">${tagLabel[item.tag]}</span>
+                `;
+                
+                itemEl.addEventListener('click', () => toggleItem(si, ii));
+                itemsDiv.appendChild(itemEl);
+            });
+
+            secDiv.appendChild(itemsDiv);
+            container.appendChild(secDiv);
+        });
+
+        updateProgress();
+    </script>
+</body>
+</html>
