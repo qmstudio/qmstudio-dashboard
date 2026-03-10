@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #ffd6e8 0%, #c9a3d9 25%, #a3c9e8 50%, #a3e8d9 75%, #d6f0c9 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
@@ -69,17 +70,27 @@
         </div>
     </div>
 
-    <script type="module">
-        import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.7'
+    <script>
+        let supabaseClient;
         
-        window.supabaseClient = createClient('https://bhfbjefntsecfqlgepo.supabase.co', 'sb_publishable_felu1qhq2V9OeYc2_XAygQ_b5ku1K0M');
+        setTimeout(() => {
+            if (window.supabase) {
+                supabaseClient = window.supabase.createClient('https://bhfbjefntsecfqlgepo.supabase.co', 'sb_publishable_felu1qhq2V9OeYc2_XAygQ_b5ku1K0M');
+            }
+        }, 100);
         
-        window.handleLogin = async function() {
+        function toggleAuth() {
+            document.getElementById('loginForm').style.display = document.getElementById('loginForm').style.display === 'none' ? 'block' : 'none';
+            document.getElementById('signupForm').style.display = document.getElementById('signupForm').style.display === 'none' ? 'block' : 'none';
+        }
+        
+        async function handleLogin() {
+            if (!supabaseClient) { alert('System loading...'); return; }
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
             if (!email || !password) { document.getElementById('errorMessage').textContent = 'Fill in all fields'; document.getElementById('errorMessage').style.display = 'block'; return; }
             try {
-                const { error } = await window.supabaseClient.auth.signInWithPassword({ email, password });
+                const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
                 if (error) throw error;
                 document.getElementById('successMessage').textContent = 'Success! Redirecting...';
                 document.getElementById('successMessage').style.display = 'block';
@@ -90,27 +101,23 @@
             }
         }
         
-        window.handleSignup = async function() {
+        async function handleSignup() {
+            if (!supabaseClient) { alert('System loading...'); return; }
             const email = document.getElementById('signupEmail').value;
             const password = document.getElementById('signupPassword').value;
             const name = document.getElementById('signupName').value;
             if (!email || !password || !name) { document.getElementById('errorMessage').textContent = 'Fill in all fields'; document.getElementById('errorMessage').style.display = 'block'; return; }
             if (password.length < 6) { document.getElementById('errorMessage').textContent = 'Password must be 6+ characters'; document.getElementById('errorMessage').style.display = 'block'; return; }
             try {
-                const { error } = await window.supabaseClient.auth.signUp({ email, password, options: { data: { full_name: name } } });
+                const { error } = await supabaseClient.auth.signUp({ email, password, options: { data: { full_name: name } } });
                 if (error) throw error;
                 document.getElementById('successMessage').textContent = 'Account created! Check your email to confirm.';
                 document.getElementById('successMessage').style.display = 'block';
-                setTimeout(() => window.toggleAuth(), 2000);
+                setTimeout(() => toggleAuth(), 2000);
             } catch (e) {
                 document.getElementById('errorMessage').textContent = e.message || 'Signup failed';
                 document.getElementById('errorMessage').style.display = 'block';
             }
-        }
-        
-        window.toggleAuth = function() {
-            document.getElementById('loginForm').style.display = document.getElementById('loginForm').style.display === 'none' ? 'block' : 'none';
-            document.getElementById('signupForm').style.display = document.getElementById('signupForm').style.display === 'none' ? 'block' : 'none';
         }
     </script>
 </body>
