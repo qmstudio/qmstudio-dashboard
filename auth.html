@@ -39,9 +39,9 @@
                     <label>Password</label>
                     <input type="password" id="loginPassword" placeholder="••••••••">
                 </div>
-                <button onclick="handleLogin()">Sign In</button>
+                <button type="button" onclick="handleLogin()">Sign In</button>
                 <div class="toggle-auth">
-                    Don't have an account? <button onclick="toggleAuth()">Sign Up</button>
+                    Don't have an account? <button type="button" onclick="toggleAuth()">Sign Up</button>
                 </div>
             </div>
             
@@ -58,9 +58,9 @@
                     <label>Full Name</label>
                     <input type="text" id="signupName" placeholder="Your Name">
                 </div>
-                <button onclick="handleSignup()">Create Account</button>
+                <button type="button" onclick="handleSignup()">Create Account</button>
                 <div class="toggle-auth">
-                    Already have an account? <button onclick="toggleAuth()">Sign In</button>
+                    Already have an account? <button type="button" onclick="toggleAuth()">Sign In</button>
                 </div>
             </div>
             
@@ -69,59 +69,48 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7"></script>
-    <script>
-        let supabaseClient;
+    <script type="module">
+        import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.7'
         
-        document.addEventListener('DOMContentLoaded', async () => {
-            supabaseClient = window.supabase.createClient('https://bhfbjefntsecfqlgepo.supabase.co', 'sb_publishable_felu1qhq2V9OeYc2_XAygQ_b5ku1K0M');
-            const { data: { user } } = await supabaseClient.auth.getUser();
-            if (user) window.location.href = 'preview-FRESH.html';
-        });
+        window.supabaseClient = createClient('https://bhfbjefntsecfqlgepo.supabase.co', 'sb_publishable_felu1qhq2V9OeYc2_XAygQ_b5ku1K0M');
         
-        function toggleAuth() {
-            document.getElementById('loginForm').style.display = document.getElementById('loginForm').style.display === 'none' ? 'block' : 'none';
-            document.getElementById('signupForm').style.display = document.getElementById('signupForm').style.display === 'none' ? 'block' : 'none';
-        }
-        
-        function showError(msg) {
-            document.getElementById('errorMessage').textContent = msg;
-            document.getElementById('errorMessage').style.display = 'block';
-        }
-        
-        function showSuccess(msg) {
-            document.getElementById('successMessage').textContent = msg;
-            document.getElementById('successMessage').style.display = 'block';
-        }
-        
-        async function handleLogin() {
+        window.handleLogin = async function() {
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
-            if (!email || !password) { showError('Fill in all fields'); return; }
+            if (!email || !password) { document.getElementById('errorMessage').textContent = 'Fill in all fields'; document.getElementById('errorMessage').style.display = 'block'; return; }
             try {
-                const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+                const { error } = await window.supabaseClient.auth.signInWithPassword({ email, password });
                 if (error) throw error;
-                showSuccess('Success! Redirecting...');
+                document.getElementById('successMessage').textContent = 'Success! Redirecting...';
+                document.getElementById('successMessage').style.display = 'block';
                 setTimeout(() => window.location.href = 'preview-FRESH.html', 1500);
             } catch (e) {
-                showError(e.message || 'Login failed');
+                document.getElementById('errorMessage').textContent = e.message || 'Login failed';
+                document.getElementById('errorMessage').style.display = 'block';
             }
         }
         
-        async function handleSignup() {
+        window.handleSignup = async function() {
             const email = document.getElementById('signupEmail').value;
             const password = document.getElementById('signupPassword').value;
             const name = document.getElementById('signupName').value;
-            if (!email || !password || !name) { showError('Fill in all fields'); return; }
-            if (password.length < 6) { showError('Password must be 6+ characters'); return; }
+            if (!email || !password || !name) { document.getElementById('errorMessage').textContent = 'Fill in all fields'; document.getElementById('errorMessage').style.display = 'block'; return; }
+            if (password.length < 6) { document.getElementById('errorMessage').textContent = 'Password must be 6+ characters'; document.getElementById('errorMessage').style.display = 'block'; return; }
             try {
-                const { error } = await supabaseClient.auth.signUp({ email, password, options: { data: { full_name: name } } });
+                const { error } = await window.supabaseClient.auth.signUp({ email, password, options: { data: { full_name: name } } });
                 if (error) throw error;
-                showSuccess('Account created! Check your email to confirm.');
-                setTimeout(() => toggleAuth(), 2000);
+                document.getElementById('successMessage').textContent = 'Account created! Check your email to confirm.';
+                document.getElementById('successMessage').style.display = 'block';
+                setTimeout(() => window.toggleAuth(), 2000);
             } catch (e) {
-                showError(e.message || 'Signup failed');
+                document.getElementById('errorMessage').textContent = e.message || 'Signup failed';
+                document.getElementById('errorMessage').style.display = 'block';
             }
+        }
+        
+        window.toggleAuth = function() {
+            document.getElementById('loginForm').style.display = document.getElementById('loginForm').style.display === 'none' ? 'block' : 'none';
+            document.getElementById('signupForm').style.display = document.getElementById('signupForm').style.display === 'none' ? 'block' : 'none';
         }
     </script>
 </body>
