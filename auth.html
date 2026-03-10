@@ -11,58 +11,19 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #ffd6e8 0%, #c9a3d9 25%, #a3c9e8 50%, #a3e8d9 75%, #d6f0c9 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .container { max-width: 380px; width: 100%; }
-        .form-box { background: rgba(245, 242, 235, 0.98); padding: 50px 45px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15); border-radius: 3px; }
+        .form-box { background: rgba(245, 242, 235, 0.98); padding: 50px 45px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15); border-radius: 3px; text-align: center; }
         h1 { font-family: 'Playfair Display', serif; color: #000; font-size: 38px; font-weight: 400; margin-bottom: 50px; }
-        .form-group { margin-bottom: 32px; }
-        label { display: block; color: #000; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; }
-        input { width: 100%; padding: 0 0 12px 0; border: none; border-bottom: 1px solid #000; background: transparent; font-size: 15px; color: #333; font-family: 'Inter', sans-serif; }
-        input:focus { outline: none; border-bottom-width: 2px; }
-        button { width: 100%; padding: 14px; background: transparent; color: #000; border: 1.5px solid #000; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; margin-top: 30px; font-family: 'Inter', sans-serif; }
+        button { width: 100%; padding: 14px; background: transparent; color: #000; border: 1.5px solid #000; border-radius: 0; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; font-family: 'Inter', sans-serif; margin-top: 30px; }
         button:hover { background: #000; color: white; }
-        .toggle-auth { margin-top: 40px; font-size: 13px; color: #999; }
-        .toggle-auth button { background: none; border: none; color: #000; text-decoration: underline; cursor: pointer; padding: 0; margin: 0; font-size: 13px; font-weight: 600; }
         .error { color: #c0392b; font-size: 12px; margin-top: 20px; padding: 12px; display: none; background: rgba(192, 57, 43, 0.08); border-radius: 4px; }
-        .success { color: #27ae60; font-size: 12px; margin-top: 20px; padding: 12px; display: none; background: rgba(39, 174, 96, 0.08); border-radius: 4px; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="form-box">
             <h1>QMStudio Dashboard</h1>
-            <div id="loginForm">
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="loginEmail" placeholder="your@email.com">
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="loginPassword" placeholder="••••••••">
-                </div>
-                <button onclick="handleLogin()">Sign In</button>
-                <div class="toggle-auth">
-                    Don't have an account? <button onclick="toggleAuth()">Sign Up</button>
-                </div>
-            </div>
-            <div id="signupForm" style="display: none;">
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="signupEmail" placeholder="your@email.com">
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="signupPassword" placeholder="••••••••">
-                </div>
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="signupName" placeholder="Your Name">
-                </div>
-                <button onclick="handleSignup()">Create Account</button>
-                <div class="toggle-auth">
-                    Already have an account? <button onclick="toggleAuth()">Sign In</button>
-                </div>
-            </div>
+            <button onclick="signInWithGoogle()">Sign In with Google</button>
             <div class="error" id="errorMessage"></div>
-            <div class="success" id="successMessage"></div>
         </div>
     </div>
 
@@ -73,37 +34,17 @@
             if (!window.supabase) { setTimeout(initSupabase, 100); return; }
             supabaseClient = window.supabase.createClient('https://bhfbjefntsecfqlgepo.supabase.co', 'sb_publishable_felu1qhq2V9OeYc2_XAygQ_b5ku1K0M');
         }
-        function toggleAuth() { document.getElementById('loginForm').style.display = document.getElementById('loginForm').style.display === 'none' ? 'block' : 'none'; document.getElementById('signupForm').style.display = document.getElementById('signupForm').style.display === 'none' ? 'block' : 'none'; }
-        function showError(msg) { document.getElementById('errorMessage').textContent = msg; document.getElementById('errorMessage').style.display = 'block'; document.getElementById('successMessage').style.display = 'none'; }
-        function showSuccess(msg) { document.getElementById('successMessage').textContent = msg; document.getElementById('successMessage').style.display = 'block'; document.getElementById('errorMessage').style.display = 'none'; }
-        async function handleLogin() {
-            if (!supabaseClient) { showError('System initializing...'); return; }
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            if (!email || !password) { showError('Please fill in all fields'); return; }
+        async function signInWithGoogle() {
+            if (!supabaseClient) { return; }
             try {
-                const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+                const { data, error } = await supabaseClient.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: { redirectTo: 'https://qmstudio-dashboard.vercel.app/preview-FRESH.html' }
+                });
                 if (error) throw error;
-                showSuccess('Login successful!');
-                setTimeout(() => { window.location.href = 'preview-FRESH.html'; }, 1500);
             } catch (error) {
-                showError(error.message || 'Login failed');
-            }
-        }
-        async function handleSignup() {
-            if (!supabaseClient) { showError('System initializing...'); return; }
-            const email = document.getElementById('signupEmail').value;
-            const password = document.getElementById('signupPassword').value;
-            const name = document.getElementById('signupName').value;
-            if (!email || !password || !name) { showError('Please fill in all fields'); return; }
-            if (password.length < 6) { showError('Password must be at least 6 characters'); return; }
-            try {
-                const { data, error } = await supabaseClient.auth.signUp({ email, password, options: { data: { full_name: name } } });
-                if (error) throw error;
-                showSuccess('Account created! Sign in now.');
-                setTimeout(() => { toggleAuth(); document.getElementById('loginEmail').value = email; }, 2000);
-            } catch (error) {
-                showError(error.message || 'Signup failed');
+                document.getElementById('errorMessage').textContent = error.message || 'Sign in failed';
+                document.getElementById('errorMessage').style.display = 'block';
             }
         }
         window.addEventListener('DOMContentLoaded', initSupabase);
