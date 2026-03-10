@@ -13,16 +13,38 @@
         .container { max-width: 380px; width: 100%; }
         .form-box { background: rgba(245, 242, 235, 0.98); padding: 50px 45px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15); border-radius: 3px; text-align: center; }
         h1 { font-family: 'Playfair Display', serif; color: #000; font-size: 38px; font-weight: 400; margin-bottom: 50px; }
-        .btn { display: inline-block; width: 100%; padding: 14px; background: transparent; color: #000; border: 1.5px solid #000; border-radius: 0; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; font-family: 'Inter', sans-serif; margin-top: 30px; text-decoration: none; }
-        .btn:hover { background: #000; color: white; }
+        button { width: 100%; padding: 14px; background: transparent; color: #000; border: 1.5px solid #000; border-radius: 0; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; font-family: 'Inter', sans-serif; margin-top: 30px; }
+        button:hover { background: #000; color: white; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="form-box">
             <h1>QMStudio Dashboard</h1>
-            <a href="https://bhfbjefntsecfqlgepo.supabase.co/auth/v1/oauth/authorize?provider=google&client_id=132825961494-co47thu3cl27beb8nqc30tn4473nhq60.apps.googleusercontent.com&redirect_to=https://qmstudio-dashboard.vercel.app/preview-FRESH.html&scopes=openid%20profile%20email" class="btn">Sign In with Google</a>
+            <button onclick="signInWithGoogle()">Sign In with Google</button>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://bhfbjefntsecfqlgepo.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_felu1qhq2V9OeYc2_XAygQ_b5ku1K0M';
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        async function signInWithGoogle() {
+            try {
+                const { data, error } = await supabase.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: {
+                        redirectTo: window.location.origin + '/preview-FRESH.html'
+                    }
+                });
+                if (error) throw error;
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+    </script>
 </body>
 </html>
