@@ -74,9 +74,30 @@ export default function Dashboard() {
         { name: 'Delivery', status: 'upcoming', dueDate: 'Today', urgent: true },
       ]
     },
-    { 
-      id: 5, 
-      name: 'rove.ing', 
+    {
+      id: 4,
+      name: 'Wingman',
+      description: 'New project - Tierney & Mark',
+      expanded: false,
+      progress: 0,
+      teamMembers: ['Tierney', 'Mark'],
+      budget: { allocated: 0, spent: 0 },
+      risk: 'low',
+      dependencies: [],
+      notes: 'New project kicking off. Deadline Mar 13.',
+      startDate: '2026-03-06',
+      endDate: '2026-03-13',
+      phases: [
+        { name: 'Scope of Work', status: 'upcoming' },
+        { name: 'Development', status: 'upcoming' },
+        { name: 'Delivery', status: 'upcoming', dueDate: 'Mar 13' },
+      ],
+      tasks: [],
+      meetings: []
+    },
+    {
+      id: 5,
+      name: 'rove.ing',
       description: 'Dog Fooding & Debugging - 90% Complete',
       expanded: false,
       progress: 90,
