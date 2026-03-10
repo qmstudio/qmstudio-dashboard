@@ -8,39 +8,39 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * { font-family: 'Inter', sans-serif; }
-        body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #ffd6e8 0%, #c9a3d9 25%, #a3c9e8 50%, #a3e8d9 75%, #d6f0c9 100%); background-attachment: fixed; }
         .dashboard-title { font-family: 'Playfair Display', serif; font-weight: 400; font-size: 4.5rem; line-height: 1; }
         .sidebar { position: fixed; top: 120px; width: 40px; height: calc(100vh - 120px); overflow: hidden; opacity: 0.8; z-index: 0; pointer-events: none; }
         .sidebar img { width: 100%; height: 100%; object-fit: cover; }
         .sidebar-left { left: 0; }
         .sidebar-right { right: 0; }
-        .unicorn-bg { background: linear-gradient(135deg, #ffd6e8 0%, #c9a3d9 25%, #a3c9e8 50%, #a3e8d9 75%, #d6f0c9 100%); }
-        .paper-texture { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><filter id="paperNoise"><feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="6" seed="5" /></filter><rect width="300" height="300" filter="url(%23paperNoise)" opacity="0.08"/></svg>'); background-size: 300px 300px; }
     </style>
 </head>
-<body class="unicorn-bg paper-texture" style="background-attachment: fixed;">
+<body>
     <div class="sidebar sidebar-left"><img src="Palm.jpg" alt="Palm"></div>
     <div class="sidebar sidebar-right"><img src="Palm.jpg" alt="Palm"></div>
     
     <div style="position: relative; z-index: 10;">
         <!-- ALERT BANNER -->
         <div class="bg-red-50 border-b border-red-200 px-12 py-4">
-            <div class="max-w-7xl mx-auto flex items-center gap-4">
-                <svg class="w-5 h-5 text-red-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-                <div class="flex-1"><p class="text-sm font-medium text-red-800">⚠️ <strong>AllVetsClub.com</strong> is due TODAY and is at HIGH RISK (50% complete)</p></div>
+            <div class="max-w-7xl mx-auto">
+                <div class="flex items-center gap-4">
+                    <svg class="w-5 h-5 text-red-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+                    <div class="flex-1"><p class="text-sm font-medium text-red-800">⚠️ <strong>AllVetsClub.com</strong> is due TODAY and is at HIGH RISK (50% complete)</p></div>
+                </div>
             </div>
         </div>
 
-        <!-- HEADER -->
-        <div class="unicorn-bg paper-texture h-40 flex flex-col justify-end px-12 py-8" style="background-attachment: fixed;">
-            <h1 class="text-white mb-2 dashboard-title" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">Dashboard</h1>
-            <p class="text-xs uppercase tracking-widest text-white">Projects & Setup</p>
+        <!-- HEADER with UNICORN GRADIENT -->
+        <div style="background: linear-gradient(135deg, #ffd6e8 0%, #c9a3d9 25%, #a3c9e8 50%, #a3e8d9 75%, #d6f0c9 100%); padding: 3rem; text-align: left;">
+            <h1 class="dashboard-title" style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); margin: 0;">Dashboard</h1>
+            <p style="color: white; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.5rem;">Projects & Setup</p>
         </div>
 
-        <!-- CONTENT -->
+        <!-- MAIN CONTENT -->
         <div style="padding: 3rem; position: relative; z-index: 10;">
-            <div style="background: rgba(245, 242, 235, 0.98); padding: 3rem; border-radius: 3px; box-shadow: 0 10px 40px rgba(0,0,0,0.15);" class="paper-texture">
-                <h2 class="text-3xl font-bold mb-8" style="font-family: 'Playfair Display', serif; color: #1f2937;">Projects Overview</h2>
+            <div style="background: rgba(245, 242, 235, 0.98); padding: 3rem; border-radius: 3px; box-shadow: 0 10px 40px rgba(0,0,0,0.15);">
+                <h2 class="text-3xl font-bold mb-8" style="font-family: 'Playfair Display', serif; color: #1f2937; margin: 0;">Projects Overview</h2>
                 
                 <!-- BUTTER FREIGHT -->
                 <div style="background: rgba(245, 242, 235, 0.7); padding: 24px; margin-bottom: 24px; border-radius: 3px; border-left: 4px solid #10b981;">
@@ -111,7 +111,7 @@
                 </div>
 
                 <!-- WINGMAN -->
-                <div style="background: #f3e8ff; padding: 24px; margin-bottom: 24px; border-radius: 3px; border-left: 4px solid #a855f7;">
+                <div style="background: #f3e8ff; padding: 24px; border-radius: 3px; border-left: 4px solid #a855f7;">
                     <div class="flex justify-between items-start mb-4">
                         <div>
                             <h3 class="text-2xl font-semibold" style="font-family: 'Playfair Display', serif; margin: 0; color: #6b21a8;">Wingman</h3>
@@ -129,9 +129,9 @@
             </div>
         </div>
 
-        <!-- FOOTER -->
-        <div class="unicorn-bg paper-texture py-12 px-12 text-center" style="background-attachment: fixed;">
-            <p class="text-white text-sm" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">© 2026 QMStudio. All projects in development.</p>
+        <!-- FOOTER with UNICORN GRADIENT -->
+        <div style="background: linear-gradient(135deg, #ffd6e8 0%, #c9a3d9 25%, #a3c9e8 50%, #a3e8d9 75%, #d6f0c9 100%); padding: 3rem; text-align: center;">
+            <p style="color: white; font-size: 0.875rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); margin: 0;">© 2026 QMStudio. All projects in development.</p>
         </div>
     </div>
 </body>
