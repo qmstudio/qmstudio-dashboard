@@ -10,6 +10,9 @@
         * { font-family: 'Inter', sans-serif; }
         html, body { margin: 0; padding: 0; background: url('Palm.jpg') center/cover fixed; min-height: 100vh; }
         .cream-card { background: #f5f2eb; border-radius: 3px; }
+        .cal-cell { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border: 1px solid #e5e7eb; font-weight: 500; color: #1f2937; }
+        .cal-empty { color: #9ca3af; background: #f9fafb; }
+        .cal-today { background: #dcfce7; color: #059669; font-weight: 700; border: 2px solid #10b981; }
     </style>
 </head>
 <body>
@@ -124,53 +127,49 @@
 
                     <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #e5e5e5;">
                         <h2 style="font-family: Playfair Display, serif; font-size: 1.25rem; color: #1f2937; margin: 0 0 1.5rem 0; text-align: center;">March</h2>
-                        <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 4px;">
-                            <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0; border-bottom: 1px solid #e5e7eb;">
-                                <div style="text-align: center; font-weight: 600; color: #1f2937; font-size: 0.75rem; padding: 0.5rem; background: #f3f4f6;">SUN</div>
-                                <div style="text-align: center; font-weight: 600; color: #1f2937; font-size: 0.75rem; padding: 0.5rem; background: #f3f4f6;">MON</div>
-                                <div style="text-align: center; font-weight: 600; color: #1f2937; font-size: 0.75rem; padding: 0.5rem; background: #f3f4f6;">TUE</div>
-                                <div style="text-align: center; font-weight: 600; color: #1f2937; font-size: 0.75rem; padding: 0.5rem; background: #f3f4f6;">WED</div>
-                                <div style="text-align: center; font-weight: 600; color: #1f2937; font-size: 0.75rem; padding: 0.5rem; background: #f3f4f6;">THU</div>
-                                <div style="text-align: center; font-weight: 600; color: #1f2937; font-size: 0.75rem; padding: 0.5rem; background: #f3f4f6;">FRI</div>
-                                <div style="text-align: center; font-weight: 600; color: #1f2937; font-size: 0.75rem; padding: 0.5rem; background: #f3f4f6;">SAT</div>
-                            </div>
-                            <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0;">
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; background: #ffffff;"></div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">1</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">2</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">3</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">4</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">5</div>
-                                <div style="aspect-ratio: 1; border-bottom: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">6</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">7</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">8</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">9</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; background: #dcfce7; display: flex; align-items: center; justify-content: center; color: #059669; font-weight: 700; border: 2px solid #10b981;">10</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">11</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">12</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">13</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">14</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">15</div>
-                                <div style="aspect-ratio: 1; border-bottom: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">16</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">17</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">18</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">19</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">20</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">21</div>
-                                <div style="aspect-ratio: 1; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">22</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">23</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">24</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">25</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">26</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">27</div>
-                                <div style="aspect-ratio: 1; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">28</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">29</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">30</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #1f2937; font-weight: 500;">31</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-weight: 500;">1</div>
-                                <div style="aspect-ratio: 1; border-right: 1px solid #e5e7eb; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-weight: 500;">2</div>
-                                <div style="aspect-ratio: 1; background: #ffffff; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-weight: 500;">3</div>
-                            </div>
+                        <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0; border: 1px solid #e5e7eb; border-radius: 4px; overflow: hidden;">
+                            <div class="cal-cell" style="background: #f3f4f6; font-weight: 600;">SUN</div>
+                            <div class="cal-cell" style="background: #f3f4f6; font-weight: 600;">MON</div>
+                            <div class="cal-cell" style="background: #f3f4f6; font-weight: 600;">TUE</div>
+                            <div class="cal-cell" style="background: #f3f4f6; font-weight: 600;">WED</div>
+                            <div class="cal-cell" style="background: #f3f4f6; font-weight: 600;">THU</div>
+                            <div class="cal-cell" style="background: #f3f4f6; font-weight: 600;">FRI</div>
+                            <div class="cal-cell" style="background: #f3f4f6; font-weight: 600;">SAT</div>
+                            <div class="cal-cell cal-empty"></div>
+                            <div class="cal-cell">1</div>
+                            <div class="cal-cell">2</div>
+                            <div class="cal-cell">3</div>
+                            <div class="cal-cell">4</div>
+                            <div class="cal-cell">5</div>
+                            <div class="cal-cell">6</div>
+                            <div class="cal-cell">7</div>
+                            <div class="cal-cell">8</div>
+                            <div class="cal-cell">9</div>
+                            <div class="cal-cell cal-today">10</div>
+                            <div class="cal-cell">11</div>
+                            <div class="cal-cell">12</div>
+                            <div class="cal-cell">13</div>
+                            <div class="cal-cell">14</div>
+                            <div class="cal-cell">15</div>
+                            <div class="cal-cell">16</div>
+                            <div class="cal-cell">17</div>
+                            <div class="cal-cell">18</div>
+                            <div class="cal-cell">19</div>
+                            <div class="cal-cell">20</div>
+                            <div class="cal-cell">21</div>
+                            <div class="cal-cell">22</div>
+                            <div class="cal-cell">23</div>
+                            <div class="cal-cell">24</div>
+                            <div class="cal-cell">25</div>
+                            <div class="cal-cell">26</div>
+                            <div class="cal-cell">27</div>
+                            <div class="cal-cell">28</div>
+                            <div class="cal-cell">29</div>
+                            <div class="cal-cell">30</div>
+                            <div class="cal-cell">31</div>
+                            <div class="cal-cell cal-empty"></div>
+                            <div class="cal-cell cal-empty"></div>
+                            <div class="cal-cell cal-empty"></div>
                         </div>
                     </div>
                 </div>
