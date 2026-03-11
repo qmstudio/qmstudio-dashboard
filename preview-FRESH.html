@@ -5,15 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QMStudio Management Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * { font-family: 'Inter', sans-serif; }
         html, body { margin: 0; padding: 0; background: url('Palm.jpg') center/cover fixed; min-height: 100vh; }
         .cream-card { background: #f5f2eb; border-radius: 3px; }
-        .cal-cell { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border: 1px solid #e5e7eb; font-weight: 500; color: #1f2937; }
+        .cal-cell { aspect-ratio: 1; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; border: 1px solid #e5e7eb; font-weight: 500; color: #1f2937; padding: 0.25rem; overflow: hidden; }
         .cal-empty { color: #9ca3af; background: #f9fafb; }
         .cal-today { background: #dcfce7; color: #059669; font-weight: 700; border: 2px solid #10b981; }
         .cal-header { aspect-ratio: auto; height: 1.05rem; background: #f3f4f6; font-weight: 600; display: flex; align-items: center; justify-content: center; border: 1px solid #e5e7eb; font-size: 0.7rem; }
+        .cal-day-num { font-weight: 600; font-size: 0.8rem; margin-bottom: 0.1rem; }
+        .cal-event { font-size: 0.5rem; line-height: 1; padding: 0.05rem 0.1rem; margin: 0.05rem 0; border-radius: 1px; color: white; background: #3b82f6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
+        .cal-event.meeting { background: #10b981; }
+        .cal-event.deadline { background: #ef4444; }
+        .cal-event.task { background: #f59e0b; }
     </style>
 </head>
 <body>
@@ -128,7 +134,7 @@
 
                     <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #e5e5e5;">
                         <h2 style="font-family: Playfair Display, serif; font-size: 1.25rem; color: #1f2937; margin: 0 0 1.5rem 0; text-align: center;">March</h2>
-                        <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0; border: 1px solid #e5e7eb; border-radius: 4px; overflow: hidden;">
+                        <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0; border: 1px solid #e5e7eb; border-radius: 4px; overflow: hidden;" id="calendar">
                             <div class="cal-header">SUN</div>
                             <div class="cal-header">MON</div>
                             <div class="cal-header">TUE</div>
@@ -136,46 +142,75 @@
                             <div class="cal-header">THU</div>
                             <div class="cal-header">FRI</div>
                             <div class="cal-header">SAT</div>
-                            <div class="cal-cell cal-empty"></div>
-                            <div class="cal-cell">1</div>
-                            <div class="cal-cell">2</div>
-                            <div class="cal-cell">3</div>
-                            <div class="cal-cell">4</div>
-                            <div class="cal-cell">5</div>
-                            <div class="cal-cell">6</div>
-                            <div class="cal-cell">7</div>
-                            <div class="cal-cell">8</div>
-                            <div class="cal-cell">9</div>
-                            <div class="cal-cell cal-today">10</div>
-                            <div class="cal-cell">11</div>
-                            <div class="cal-cell">12</div>
-                            <div class="cal-cell">13</div>
-                            <div class="cal-cell">14</div>
-                            <div class="cal-cell">15</div>
-                            <div class="cal-cell">16</div>
-                            <div class="cal-cell">17</div>
-                            <div class="cal-cell">18</div>
-                            <div class="cal-cell">19</div>
-                            <div class="cal-cell">20</div>
-                            <div class="cal-cell">21</div>
-                            <div class="cal-cell">22</div>
-                            <div class="cal-cell">23</div>
-                            <div class="cal-cell">24</div>
-                            <div class="cal-cell">25</div>
-                            <div class="cal-cell">26</div>
-                            <div class="cal-cell">27</div>
-                            <div class="cal-cell">28</div>
-                            <div class="cal-cell">29</div>
-                            <div class="cal-cell">30</div>
-                            <div class="cal-cell">31</div>
-                            <div class="cal-cell cal-empty"></div>
-                            <div class="cal-cell cal-empty"></div>
-                            <div class="cal-cell cal-empty"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        const supabaseUrl = 'https://bhfbjefntsecfqlgepo.supabase.co';
+        const supabaseKey = 'sb_publishable_felu1qhq2V9OeYc2_XAygQ_b5ku1K0M';
+        const { createClient } = window.supabase;
+        const supabase = createClient(supabaseUrl, supabaseKey);
+
+        async function renderCalendar() {
+            try {
+                const { data: events, error } = await supabase.from('calendar_events').select('*').gte('event_date', '2026-03-01').lte('event_date', '2026-03-31');
+                
+                if (error) console.error('Error:', error);
+
+                const eventMap = {};
+                if (events) {
+                    events.forEach(event => {
+                        const day = new Date(event.event_date).getDate();
+                        if (!eventMap[day]) eventMap[day] = [];
+                        eventMap[day].push(event);
+                    });
+                }
+
+                const calendar = document.getElementById('calendar');
+                const cells = calendar.querySelectorAll('.cal-header');
+                const emptyCell = document.createElement('div');
+                emptyCell.className = 'cal-cell cal-empty';
+                calendar.appendChild(emptyCell);
+
+                for (let day = 1; day <= 31; day++) {
+                    const cell = document.createElement('div');
+                    const isToday = day === 10;
+                    cell.className = 'cal-cell' + (isToday ? ' cal-today' : '');
+                    
+                    const dayNum = document.createElement('div');
+                    dayNum.className = 'cal-day-num';
+                    dayNum.textContent = day;
+                    cell.appendChild(dayNum);
+
+                    if (eventMap[day]) {
+                        eventMap[day].forEach(event => {
+                            const eventEl = document.createElement('div');
+                            eventEl.className = 'cal-event ' + (event.event_type || 'meeting');
+                            const time = event.event_time ? event.event_time.substring(0, 5) : '';
+                            eventEl.textContent = (time ? time + ' ' : '') + event.title;
+                            eventEl.title = event.title + (time ? ' @ ' + time : '');
+                            cell.appendChild(eventEl);
+                        });
+                    }
+
+                    calendar.appendChild(cell);
+                }
+
+                for (let i = 0; i < 3; i++) {
+                    const emptyCell2 = document.createElement('div');
+                    emptyCell2.className = 'cal-cell cal-empty';
+                    calendar.appendChild(emptyCell2);
+                }
+            } catch (err) {
+                console.error('Calendar error:', err);
+            }
+        }
+
+        renderCalendar();
+    </script>
 </body>
 </html>
