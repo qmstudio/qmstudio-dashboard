@@ -8,250 +8,96 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * { font-family: 'Inter', sans-serif; }
-        body { font-family: 'Inter', sans-serif; background-color: #ffffff; margin: 0; }
-        .dashboard-title { font-family: 'Playfair Display', serif; font-weight: 400; letter-spacing: -0.02em; font-size: 4.5rem; line-height: 1; }
-        .cream-card { background: rgba(245, 242, 235, 0.98); border-radius: 3px; }
+        html, body { margin: 0; padding: 0; background: url('Palm.jpg') center/cover fixed; min-height: 100vh; }
+        .cream-card { background: #f5f2eb; border-radius: 3px; }
     </style>
 </head>
-<body class="bg-white">
-    <div class="relative z-10">
-        <!-- ALERTS BANNER -->
-        <div class="bg-red-50 border-b border-red-200 px-12 py-4">
-            <div class="max-w-7xl mx-auto">
-                <div class="flex items-center gap-4">
-                    <svg class="w-5 h-5 text-red-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-                    </svg>
-                    <div class="flex-1">
-                        <p class="text-sm font-medium text-red-800">⚠️ <strong>AllVetsClub.com</strong> is due TODAY and is at HIGH RISK (50% complete)</p>
-                    </div>
-                    <button class="text-xs text-red-600 hover:text-red-800 font-medium">Dismiss</button>
-                </div>
-            </div>
+<body>
+    <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-image: repeating-linear-gradient(0deg, rgba(0,0,0,0.4) 1px, transparent 1px), repeating-linear-gradient(90deg, rgba(0,0,0,0.4) 1px, transparent 1px); background-size: 20px 20px; z-index: 0;"></div>
+
+    <div style="position: relative; z-index: 1;">
+        <div style="background: #dc2626; padding: 1rem 3rem; border-bottom: 2px solid #991b1b;">
+            <p style="color: white; margin: 0; font-weight: 600; font-size: 0.875rem;">⚠️ AllVetsClub.com is due TODAY - HIGH RISK (50%)</p>
         </div>
 
-        <!-- Header - PALM TREE BACKGROUND WITH GRID TEXTURE OVERLAY -->
-        <div style="position: relative; padding: 4rem 3rem; margin: 0; background: url('Palm.jpg') center/cover no-repeat; min-height: 280px; display: flex; flex-direction: column; justify-content: center;">
-            <!-- Grid texture overlay at 40% opacity -->
-            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: repeating-linear-gradient(0deg, rgba(0,0,0,0.4) 1px, transparent 1px), repeating-linear-gradient(90deg, rgba(0,0,0,0.4) 1px, transparent 1px); background-size: 20px 20px; pointer-events: none; z-index: 1;"></div>
-            <!-- Text content -->
-            <div style="position: relative; z-index: 2;">
-                <h1 class="dashboard-title" style="color: #1f2937; margin: 0; margin-bottom: 0.5rem;">QM Studio Dashboard</h1>
-                <p class="text-xs uppercase tracking-widest" style="color: #666; margin: 0;">Project Management & Team Overview</p>
-            </div>
+        <div style="padding: 4rem 3rem; min-height: 280px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+            <h1 style="color: white; margin: 0; font-size: 4rem; font-family: Playfair Display, serif; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); letter-spacing: -0.02em;">QM Studio Dashboard</h1>
+            <p style="color: white; margin: 0.5rem 0 0 0; font-size: 0.875rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); text-transform: uppercase; letter-spacing: 0.05em;">Project Management & Team Overview</p>
         </div>
 
-        <!-- BODY SECTION -->
-        <div style="background: linear-gradient(135deg, #cccccc 0%, #c9c9c9 50%, #cccccc 100%); padding-left: 40px; padding-right: 40px; width: 100%;">
-            <div class="cream-card" style="box-shadow: 0 10px 40px rgba(0,0,0,0.15);">
+        <div style="padding: 3rem; background: transparent;">
+            <div class="cream-card" style="box-shadow: 0 10px 40px rgba(0,0,0,0.15); padding: 3rem;">
                 
-                <!-- ===== SECTION 0: SEARCH & FILTER ===== -->
-                <div style="border-bottom: 1px solid #e5e5e5; padding: 2rem 3rem; background: rgba(250, 248, 245, 0.6);">
-                    <div class="max-w-7xl mx-auto">
-                        <div class="flex gap-4 items-end">
-                            <div class="flex-1">
-                                <label class="text-xs uppercase tracking-widest text-gray-500 block mb-2">Search Projects</label>
-                                <input type="text" placeholder="Search by project name, team member, or status..." class="w-full text-sm border border-gray-300 bg-white px-4 py-2 rounded focus:outline-none focus:border-black" />
-                            </div>
-                            <div>
-                                <label class="text-xs uppercase tracking-widest text-gray-500 block mb-2">Filter by Risk</label>
-                                <select class="text-sm border border-gray-300 bg-white px-4 py-2 rounded focus:outline-none focus:border-black">
-                                    <option>All Risks</option>
-                                    <option>Low Risk</option>
-                                    <option>Medium Risk</option>
-                                    <option>High Risk</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="text-xs uppercase tracking-widest text-gray-500 block mb-2">Filter by Status</label>
-                                <select class="text-sm border border-gray-300 bg-white px-4 py-2 rounded focus:outline-none focus:border-black">
-                                    <option>All Status</option>
-                                    <option>On Track</option>
-                                    <option>At Risk</option>
-                                    <option>Blocked</option>
-                                </select>
-                            </div>
-                            <button class="text-xs uppercase tracking-widest font-medium border border-black bg-black text-white px-6 py-2 rounded hover:bg-gray-900">Search</button>
-                        </div>
-                    </div>
+                <div style="border-bottom: 1px solid #e5e5e5; padding-bottom: 2rem; margin-bottom: 2rem;">
+                    <h2 style="font-family: Playfair Display, serif; font-size: 1.5rem; color: #1f2937; margin: 0 0 2rem 0;">Search Projects</h2>
+                    <input type="text" placeholder="Search by project name, team member, or status..." style="width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 4px; font-size: 0.875rem;">
                 </div>
 
-                <!-- ===== SECTION 1: DASHBOARD SUMMARY ===== -->
-                <div style="border-bottom: 1px solid #e5e5e5; padding: 5rem 3rem;">
-                    <div class="max-w-7xl mx-auto">
-                        <h2 class="text-xs uppercase tracking-widest text-gray-500 mb-12">Dashboard Summary</h2>
-                        
-                        <!-- Key Metrics -->
-                        <div class="grid grid-cols-4 gap-6 mb-16">
-                            <div class="border border-gray-200 rounded-lg p-6 bg-white">
-                                <p class="text-xs uppercase tracking-widest text-gray-500 mb-2">Total Projects</p>
-                                <p class="text-3xl font-bold text-gray-900">5</p>
-                                <p class="text-xs text-gray-600 mt-2">Active: 5 | On Hold: 0</p>
+                <div>
+                    <h2 style="font-family: Playfair Display, serif; font-size: 1.5rem; color: #1f2937; margin: 0 0 2rem 0;">Projects Overview</h2>
+                    
+                    <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 1.5rem; border-radius: 4px; margin-bottom: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                            <div>
+                                <h3 style="font-size: 1.25rem; font-weight: 600; color: #1f2937; margin: 0;">Butter Freight</h3>
+                                <p style="font-size: 0.875rem; color: #6b7280; margin: 0.5rem 0 0 0;">Logistics & Freight Management</p>
                             </div>
-                            <div class="border border-gray-200 rounded-lg p-6 bg-white">
-                                <p class="text-xs uppercase tracking-widest text-gray-500 mb-2">Avg Progress</p>
-                                <p class="text-3xl font-bold text-gray-900">48%</p>
-                                <div class="w-full bg-gray-200 rounded-full h-2 mt-3">
-                                    <div class="bg-gray-900 h-2 rounded-full" style="width: 48%"></div>
-                                </div>
-                            </div>
-                            <div class="border border-gray-200 rounded-lg p-6 bg-white">
-                                <p class="text-xs uppercase tracking-widest text-gray-500 mb-2">Total Budget</p>
-                                <p class="text-3xl font-bold text-gray-900">$95K</p>
-                                <p class="text-xs text-gray-600 mt-2">Spent: $45K (47%)</p>
-                            </div>
-                            <div class="border border-gray-200 rounded-lg p-6 bg-white">
-                                <p class="text-xs uppercase tracking-widest text-gray-500 mb-2">Risk Status</p>
-                                <div class="flex gap-2 mt-2">
-                                    <div class="text-center">
-                                        <p class="text-2xl font-bold text-green-600">3</p>
-                                        <p class="text-xs text-gray-600">Low</p>
-                                    </div>
-                                    <div class="text-center">
-                                        <p class="text-2xl font-bold text-yellow-600">1</p>
-                                        <p class="text-xs text-gray-600">Med</p>
-                                    </div>
-                                    <div class="text-center">
-                                        <p class="text-2xl font-bold text-red-600">1</p>
-                                        <p class="text-xs text-gray-600">High</p>
-                                    </div>
-                                </div>
-                            </div>
+                            <span style="background: #dcfce7; color: #059669; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600;">LOW RISK</span>
                         </div>
-
-                        <!-- Project Status Cards -->
-                        <div class="mb-16 pb-8" style="border-bottom: 1px solid #e5e5e5;">
-                            <p class="text-xs uppercase tracking-widest text-gray-500 mb-8">Project Status Overview</p>
-                            <div class="grid grid-cols-5 gap-4">
-                                <div class="cream-card border border-green-200 p-4 bg-green-50">
-                                    <div class="flex items-start justify-between mb-3">
-                                        <h4 class="text-sm font-medium text-gray-900">Butter Freight</h4>
-                                        <span class="text-xs font-bold px-2 py-1 rounded bg-green-100 text-green-700">ON TRACK</span>
-                                    </div>
-                                    <p class="text-xs text-gray-600 mb-3">60% • Low Risk</p>
-                                    <p class="text-xs text-gray-700 font-medium mb-3">Due: Mar 10</p>
-                                    <div class="flex gap-2">
-                                        <button class="text-xs bg-white border border-gray-300 text-gray-700 px-2 py-1 rounded hover:bg-gray-50">Edit %</button>
-                                        <button class="text-xs bg-white border border-gray-300 text-gray-700 px-2 py-1 rounded hover:bg-gray-50">Change Risk</button>
-                                    </div>
-                                </div>
-                                <div class="cream-card border border-yellow-200 p-4 bg-yellow-50">
-                                    <div class="flex items-start justify-between mb-3">
-                                        <h4 class="text-sm font-medium text-gray-900">Pod.ing</h4>
-                                        <span class="text-xs font-bold px-2 py-1 rounded bg-yellow-100 text-yellow-700">AT RISK</span>
-                                    </div>
-                                    <p class="text-xs text-gray-600 mb-3">40% • Medium Risk</p>
-                                    <p class="text-xs text-gray-700 font-medium mb-3">Due: Apr 15</p>
-                                    <div class="flex gap-2">
-                                        <button class="text-xs bg-white border border-gray-300 text-gray-700 px-2 py-1 rounded hover:bg-gray-50">Edit %</button>
-                                        <button class="text-xs bg-white border border-gray-300 text-gray-700 px-2 py-1 rounded hover:bg-gray-50">Change Risk</button>
-                                    </div>
-                                </div>
-                                <div class="cream-card border border-red-200 p-4 bg-red-50">
-                                    <div class="flex items-start justify-between mb-3">
-                                        <h4 class="text-sm font-medium text-gray-900">AllVetsClub</h4>
-                                        <span class="text-xs font-bold px-2 py-1 rounded bg-red-100 text-red-700">BLOCKED</span>
-                                    </div>
-                                    <p class="text-xs text-gray-600 mb-3">50% • High Risk</p>
-                                    <p class="text-xs text-red-700 font-medium mb-3">URGENT - Due Today!</p>
-                                    <div class="flex gap-2">
-                                        <button class="text-xs bg-white border border-gray-300 text-gray-700 px-2 py-1 rounded hover:bg-gray-50">Edit %</button>
-                                        <button class="text-xs bg-white border border-gray-300 text-gray-700 px-2 py-1 rounded hover:bg-gray-50">Change Risk</button>
-                                    </div>
-                                </div>
-                                <div class="cream-card border border-blue-200 p-4 bg-blue-50">
-                                    <div class="flex items-start justify-between mb-3">
-                                        <h4 class="text-sm font-medium text-gray-900">rove.ing</h4>
-                                        <span class="text-xs font-bold px-2 py-1 rounded bg-blue-100 text-blue-700">ON TRACK</span>
-                                    </div>
-                                    <p class="text-xs text-gray-600 mb-3">90% • Low Risk</p>
-                                    <p class="text-xs text-gray-700 font-medium mb-3">Nearly Complete</p>
-                                    <div class="flex gap-2">
-                                        <button class="text-xs bg-white border border-gray-300 text-gray-700 px-2 py-1 rounded hover:bg-gray-50">Edit %</button>
-                                        <button class="text-xs bg-white border border-gray-300 text-gray-700 px-2 py-1 rounded hover:bg-gray-50">Change Risk</button>
-                                    </div>
-                                </div>
-                                <div class="cream-card border border-green-200 p-4 bg-green-50">
-                                    <div class="flex items-start justify-between mb-3">
-                                        <h4 class="text-sm font-medium text-gray-900">Wingman</h4>
-                                        <span class="text-xs font-bold px-2 py-1 rounded bg-green-100 text-green-700">ON TRACK</span>
-                                    </div>
-                                    <p class="text-xs text-gray-600 mb-3">48% • Low Risk</p>
-                                    <p class="text-xs text-gray-700 font-medium mb-3">GTM Launch</p>
-                                    <div class="flex gap-2">
-                                        <button class="text-xs bg-white border border-gray-300 text-gray-700 px-2 py-1 rounded hover:bg-gray-50">Edit %</button>
-                                        <button class="text-xs bg-white border border-gray-300 text-gray-700 px-2 py-1 rounded hover:bg-gray-50">Change Risk</button>
-                                    </div>
-                                    <a href="wingman-gtm.html" class="block mt-3 text-xs uppercase tracking-widest font-medium text-center border border-black bg-black text-white px-4 py-2 rounded hover:bg-gray-900">View GTM Checklist</a>
-                                </div>
-                            </div>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;">
+                            <div><p style="font-size: 0.75rem; text-transform: uppercase; color: #6b7280; margin: 0; font-weight: 600;">Progress</p><p style="font-size: 1.5rem; font-weight: bold; color: #1f2937; margin: 0.5rem 0 0 0;">60%</p></div>
+                            <div><p style="font-size: 0.75rem; text-transform: uppercase; color: #6b7280; margin: 0; font-weight: 600;">Team</p><p style="font-size: 0.875rem; color: #1f2937; margin: 0.5rem 0 0 0;">Frank, Mark, Tierney</p></div>
+                            <div><p style="font-size: 0.75rem; text-transform: uppercase; color: #6b7280; margin: 0; font-weight: 600;">Budget</p><p style="font-size: 0.875rem; color: #1f2937; margin: 0.5rem 0 0 0;">$5K / $2.5k spent</p></div>
+                            <div><p style="font-size: 0.75rem; text-transform: uppercase; color: #6b7280; margin: 0; font-weight: 600;">Timeline</p><p style="font-size: 0.875rem; color: #1f2937; margin: 0.5rem 0 0 0;">Feb 1 - Mar 10</p></div>
                         </div>
+                        <a href="butter-freight-internal.html" style="display: block; margin-top: 1rem; text-align: center; padding: 0.75rem; background: #10b981; color: white; border: none; border-radius: 4px; font-size: 0.875rem; font-weight: 600; text-decoration: none; cursor: pointer;">View Details</a>
+                    </div>
 
-                        <!-- Team Workload -->
-                        <div class="mb-16 pb-8" style="border-bottom: 1px solid #e5e5e5;">
-                            <p class="text-xs uppercase tracking-widest text-gray-500 mb-8">Team Workload</p>
-                            <div class="grid grid-cols-4 gap-6">
-                                <div class="cream-card border border-gray-200 p-4">
-                                    <h4 class="text-sm font-medium text-gray-900 mb-3">Frank</h4>
-                                    <div class="space-y-2">
-                                        <div class="text-xs text-gray-700">• Butter Freight</div>
-                                        <div class="text-xs text-gray-700">• AllVetsClub (QA)</div>
-                                        <div class="text-xs text-gray-600 mt-2 font-medium">2 Projects Assigned</div>
-                                    </div>
-                                </div>
-                                <div class="cream-card border border-gray-200 p-4">
-                                    <h4 class="text-sm font-medium text-gray-900 mb-3">Mark</h4>
-                                    <div class="space-y-2">
-                                        <div class="text-xs text-gray-700">• Butter Freight</div>
-                                        <div class="text-xs text-gray-700">• Wingman</div>
-                                        <div class="text-xs text-gray-600 mt-2 font-medium">2 Projects Assigned</div>
-                                    </div>
-                                </div>
-                                <div class="cream-card border border-gray-200 p-4">
-                                    <h4 class="text-sm font-medium text-gray-900 mb-3">Casey</h4>
-                                    <div class="space-y-2">
-                                        <div class="text-xs text-gray-700">• AllVetsClub</div>
-                                        <div class="text-xs text-gray-700">• rove.ing</div>
-                                        <div class="text-xs text-gray-600 mt-2 font-medium">2 Projects Assigned</div>
-                                    </div>
-                                </div>
-                                <div class="cream-card border border-gray-200 p-4">
-                                    <h4 class="text-sm font-medium text-gray-900 mb-3">Tierney</h4>
-                                    <div class="space-y-2">
-                                        <div class="text-xs text-gray-700">• Butter Freight</div>
-                                        <div class="text-xs text-gray-700">• Wingman</div>
-                                        <div class="text-xs text-gray-600 mt-2 font-medium">2 Projects Assigned</div>
-                                    </div>
-                                </div>
+                    <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 1.5rem; border-radius: 4px; margin-bottom: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                            <div>
+                                <h3 style="font-size: 1.25rem; font-weight: 600; color: #1f2937; margin: 0;">Pod.ing</h3>
+                                <p style="font-size: 0.875rem; color: #6b7280; margin: 0.5rem 0 0 0;">Podcast Platform Development</p>
                             </div>
+                            <span style="background: #fef3c7; color: #d97706; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600;">MEDIUM RISK</span>
                         </div>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;">
+                            <div><p style="font-size: 0.75rem; text-transform: uppercase; color: #6b7280; margin: 0; font-weight: 600;">Progress</p><p style="font-size: 1.5rem; font-weight: bold; color: #1f2937; margin: 0.5rem 0 0 0;">40%</p></div>
+                            <div><p style="font-size: 0.75rem; text-transform: uppercase; color: #6b7280; margin: 0; font-weight: 600;">Team</p><p style="font-size: 0.875rem; color: #1f2937; margin: 0.5rem 0 0 0;">Lisa, Tom, Ben</p></div>
+                            <div><p style="font-size: 0.75rem; text-transform: uppercase; color: #6b7280; margin: 0; font-weight: 600;">Budget</p><p style="font-size: 0.875rem; color: #1f2937; margin: 0.5rem 0 0 0;">$25K / $8k spent</p></div>
+                            <div><p style="font-size: 0.75rem; text-transform: uppercase; color: #6b7280; margin: 0; font-weight: 600;">Timeline</p><p style="font-size: 0.875rem; color: #1f2937; margin: 0.5rem 0 0 0;">Feb 15 - Apr 15</p></div>
+                        </div>
+                    </div>
 
-                        <!-- Upcoming Deadlines -->
-                        <div>
-                            <p class="text-xs uppercase tracking-widest text-gray-500 mb-8">Upcoming Deadlines</p>
-                            <div class="space-y-3">
-                                <div class="cream-card border border-red-200 bg-red-50 p-4 flex justify-between items-center">
-                                    <div>
-                                        <p class="text-sm font-medium text-gray-900">AllVetsClub.com</p>
-                                        <p class="text-xs text-red-700 font-medium">TODAY - 50% Complete</p>
-                                    </div>
-                                    <a href="#" class="text-xs uppercase tracking-widest font-medium text-center border border-red-600 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">View Project</a>
-                                </div>
-                                <div class="cream-card border border-yellow-200 bg-yellow-50 p-4 flex justify-between items-center">
-                                    <div>
-                                        <p class="text-sm font-medium text-gray-900">Butter Freight</p>
-                                        <p class="text-xs text-yellow-700">Due in 0 days - 60% Complete</p>
-                                    </div>
-                                    <a href="#" class="text-xs uppercase tracking-widest font-medium text-center border border-yellow-600 bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700">View Project</a>
-                                </div>
-                                <div class="cream-card border border-gray-200 p-4 flex justify-between items-center">
-                                    <div>
-                                        <p class="text-sm font-medium text-gray-900">Pod.ing</p>
-                                        <p class="text-xs text-gray-600">Due in 36 days - 40% Complete</p>
-                                    </div>
-                                    <a href="#" class="text-xs uppercase tracking-widest font-medium text-center border border-gray-300 bg-gray-300 text-white px-4 py-2 rounded hover:bg-gray-400">View Project</a>
-                                </div>
+                    <div style="background: #fee2e2; border-left: 4px solid #ef4444; padding: 1.5rem; border-radius: 4px; margin-bottom: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                            <div>
+                                <h3 style="font-size: 1.25rem; font-weight: 600; color: #1f2937; margin: 0;">AllVetsClub.com</h3>
+                                <p style="font-size: 0.875rem; color: #6b7280; margin: 0.5rem 0 0 0;">Veterinary Membership Platform</p>
                             </div>
+                            <span style="background: #fee2e2; color: #b91c1c; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600;">HIGH RISK</span>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;">
+                            <div><p style="font-size: 0.75rem; text-transform: uppercase; color: #6b7280; margin: 0; font-weight: 600;">Progress</p><p style="font-size: 1.5rem; font-weight: bold; color: #1f2937; margin: 0.5rem 0 0 0;">50%</p></div>
+                            <div><p style="font-size: 0.75rem; text-transform: uppercase; color: #6b7280; margin: 0; font-weight: 600;">Team</p><p style="font-size: 0.875rem; color: #1f2937; margin: 0.5rem 0 0 0;">Alex, Jordan, Casey</p></div>
+                            <div><p style="font-size: 0.75rem; text-transform: uppercase; color: #6b7280; margin: 0; font-weight: 600;">Budget</p><p style="font-size: 0.875rem; color: #1f2937; margin: 0.5rem 0 0 0;">$60K / $30k spent</p></div>
+                            <div><p style="font-size: 0.75rem; text-transform: uppercase; color: #6b7280; margin: 0; font-weight: 600;">Timeline</p><p style="font-size: 0.875rem; color: #1f2937; margin: 0.5rem 0 0 0;"><strong>DUE TODAY</strong></p></div>
+                        </div>
+                    </div>
+
+                    <div style="background: #dbeafe; border-left: 4px solid #3b82f6; padding: 1.5rem; border-radius: 4px; margin-bottom: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                            <div>
+                                <h3 style="font-size: 1.25rem; font-weight: 600; color: #1f2937; margin: 0;">rove.ing</h3>
+                                <p style="font-size: 0.875rem; color: #6b7280; margin: 0.5rem 0 0 0;">Travel & Accommodation Platform</p>
+                            </div>
+                            <span style="background: #dbeafe; color: #1e40af; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600;">LOW RISK</span>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;">
+                            <div><p style="font-size: 0.75rem; text-transform: uppercase; color: #6b7280; margin: 0; font-weight: 600;">Progress</p><p style="font-size: 1.5rem; font-weight: bold; color: #1f2937; margin: 0.5rem 0 0 0;">90%</p></div>
+                            <div><p style="font-size: 0.75rem; text-transform: uppercase; color: #6b7280; margin: 0; font-weight: 600;">Team</p><p style="font-size: 0.875rem; color: #1f2937; margin: 0.5rem 0 0 0;">Riley, Morgan, Casey</p></div>
+                            <div><p style="font-size: 0.75rem; text-transform: uppercase; color: #6b7280; margin: 0; font-weight: 600;">Budget</p><p style="font-size: 0.875rem; color: #1f2937; margin: 0.5rem 0 0 0;">$55K / $49.5k spent</p></div>
+                            <div><p style="font-size: 0.75rem; text-transform: uppercase; color: #6b7280; margin: 0; font-weight: 600;">Timeline</p><p style="font-size: 0.875rem; color: #1f2937; margin: 0.5rem 0 0 0;">Nov 15 - Ongoing</p></div>
                         </div>
                     </div>
                 </div>
