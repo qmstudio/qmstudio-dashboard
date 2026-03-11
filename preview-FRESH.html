@@ -195,10 +195,10 @@
     </div>
 
     <script>
-        const supabase = supabase.createClient(
-            'https://bhfbjefntsecfqlgepo.supabase.co',
-            'sb_publishable_felu1qhq2V9OeYc2_XAygQ_b5ku1K0M'
-        );
+        const { createClient } = window.supabase;
+        const supabaseUrl = 'https://bhfbjefntsecfqlgepo.supabase.co';
+        const supabaseKey = 'sb_publishable_felu1qhq2V9OeYc2_XAygQ_b5ku1K0M';
+        const supabase = createClient(supabaseUrl, supabaseKey);
 
         function openEventModal() {
             document.getElementById('eventModal').classList.add('active');
@@ -238,61 +238,70 @@
         });
 
         async function renderCalendar() {
-            const { data: events } = await supabase.from('calendar_events').select('*');
-            const grid = document.getElementById('calendarGrid');
-            grid.innerHTML = '';
-
-            const daysInMonth = 31;
-            const firstDay = 6;
-            const eventMap = {};
-
-            if (events) {
-                events.forEach(event => {
-                    const day = new Date(event.event_date).getDate();
-                    if (!eventMap[day]) eventMap[day] = [];
-                    eventMap[day].push(event);
-                });
-            }
-
-            for (let i = 0; i < firstDay; i++) {
-                const cell = document.createElement('div');
-                cell.style.cssText = 'aspect-ratio: 1; border-right: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; background: #ffffff;';
-                grid.appendChild(cell);
-            }
-
-            for (let day = 1; day <= daysInMonth; day++) {
-                const cell = document.createElement('div');
-                const isToday = day === 10;
-                const cellEvents = eventMap[day] || [];
+            try {
+                const { data: events, error } = await supabase.from('calendar_events').select('*');
                 
-                cell.style.cssText = `aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; border-right: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; background: ${isToday ? '#dcfce7' : '#ffffff'}; padding: 0.25rem; font-size: 0.75rem; cursor: pointer;`;
-                
-                if (isToday) {
-                    cell.style.border = '2px solid #10b981';
+                if (error) {
+                    console.error('Error fetching events:', error);
                 }
 
-                const dayNum = document.createElement('div');
-                dayNum.style.cssText = `font-weight: ${isToday ? '700' : '500'}; color: ${isToday ? '#059669' : '#1f2937'}; margin-bottom: 0.25rem;`;
-                dayNum.textContent = day;
-                cell.appendChild(dayNum);
+                const grid = document.getElementById('calendarGrid');
+                grid.innerHTML = '';
 
-                if (cellEvents.length > 0) {
-                    cellEvents.forEach(event => {
-                        const eventEl = document.createElement('div');
-                        eventEl.style.cssText = `font-size: 0.5rem; color: #ffffff; background: ${event.color}; padding: 0.1rem 0.25rem; border-radius: 2px; margin: 0.05rem; width: 100%; text-align: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;`;
-                        eventEl.textContent = event.title.substring(0, 8);
-                        cell.appendChild(eventEl);
+                const daysInMonth = 31;
+                const firstDay = 6;
+                const eventMap = {};
+
+                if (events) {
+                    events.forEach(event => {
+                        const day = new Date(event.event_date).getDate();
+                        if (!eventMap[day]) eventMap[day] = [];
+                        eventMap[day].push(event);
                     });
                 }
 
-                grid.appendChild(cell);
-            }
+                for (let i = 0; i < firstDay; i++) {
+                    const cell = document.createElement('div');
+                    cell.style.cssText = 'aspect-ratio: 1; border-right: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; background: #ffffff;';
+                    grid.appendChild(cell);
+                }
 
-            for (let i = 0; i < 3; i++) {
-                const cell = document.createElement('div');
-                cell.style.cssText = 'aspect-ratio: 1; border-right: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; background: #ffffff; color: #9ca3af;';
-                cell.textContent = i + 1;
-                grid.appendChild(cell);
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const cell = document.createElement('div');
+                    const isToday = day === 10;
+                    const cellEvents = eventMap[day] || [];
+                    
+                    cell.style.cssText = `aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; border-right: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; background: ${isToday ? '#dcfce7' : '#ffffff'}; padding: 0.25rem; font-size: 0.75rem; cursor: pointer;`;
+                    
+                    if (isToday) {
+                        cell.style.border = '2px solid #10b981';
+                    }
+
+                    const dayNum = document.createElement('div');
+                    dayNum.style.cssText = `font-weight: ${isToday ? '700' : '500'}; color: ${isToday ? '#059669' : '#1f2937'}; margin-bottom: 0.25rem;`;
+                    dayNum.textContent = day;
+                    cell.appendChild(dayNum);
+
+                    if (cellEvents.length > 0) {
+                        cellEvents.forEach(event => {
+                            const eventEl = document.createElement('div');
+                            eventEl.style.cssText = `font-size: 0.5rem; color: #ffffff; background: ${event.color}; padding: 0.1rem 0.25rem; border-radius: 2px; margin: 0.05rem; width: 100%; text-align: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;`;
+                            eventEl.textContent = event.title.substring(0, 8);
+                            cell.appendChild(eventEl);
+                        });
+                    }
+
+                    grid.appendChild(cell);
+                }
+
+                for (let i = 0; i < 3; i++) {
+                    const cell = document.createElement('div');
+                    cell.style.cssText = 'aspect-ratio: 1; border-right: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; background: #ffffff; color: #9ca3af;';
+                    cell.textContent = i + 1;
+                    grid.appendChild(cell);
+                }
+            } catch (err) {
+                console.error('Error rendering calendar:', err);
             }
         }
 
