@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QMStudio Management Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * { font-family: 'Inter', sans-serif; }
@@ -16,7 +15,10 @@
         .cal-today { background: #dcfce7; color: #059669; font-weight: 700; border: 2px solid #10b981; }
         .cal-header { aspect-ratio: auto; height: 1.05rem; background: #f3f4f6; font-weight: 600; display: flex; align-items: center; justify-content: center; border: 1px solid #e5e7eb; font-size: 0.7rem; }
         .cal-day-num { font-weight: 600; font-size: 0.8rem; margin-bottom: 0.1rem; }
-        .cal-event { font-size: 0.5rem; line-height: 1; padding: 0.05rem 0.1rem; margin: 0.05rem 0; border-radius: 1px; color: white; background: #10b981; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
+        .cal-event { font-size: 0.5rem; line-height: 1; padding: 0.05rem 0.1rem; margin: 0.05rem 0; border-radius: 1px; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
+        .cal-event.meeting { background: #10b981; }
+        .cal-event.deadline { background: #ef4444; }
+        .cal-event.task { background: #f59e0b; }
     </style>
 </head>
 <body>
@@ -139,7 +141,7 @@
     </div>
 
     <script>
-        async function loadCalendar() {
+        function renderCalendar() {
             const calendar = document.getElementById('calendar');
             const headers = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
             
@@ -150,27 +152,21 @@
                 calendar.appendChild(header);
             });
 
-            let eventMap = {};
-
-            try {
-                const { createClient } = window.supabase;
-                const supabase = createClient('https://bhfbjefntsecfqlgepo.supabase.co', 'sb_publishable_felu1qhq2V9OeYc2_XAygQ_b5ku1K0M');
-                
-                const { data: events, error } = await supabase.from('calendar_events').select('*');
-                
-                if (error) {
-                    console.error('Supabase error:', error);
-                } else if (events) {
-                    events.forEach(event => {
-                        const day = new Date(event.event_date).getDate();
-                        if (!eventMap[day]) eventMap[day] = [];
-                        eventMap[day].push(event);
-                    });
-                    console.log('Loaded events:', events);
-                }
-            } catch (err) {
-                console.error('Error loading Supabase:', err);
-            }
+            const testEvents = {
+                10: [
+                    { event_time: '15:00:00', title: 'Project Sync', event_type: 'meeting' }
+                ],
+                12: [
+                    { event_time: '14:00:00', title: 'Client Check-in', event_type: 'meeting' }
+                ],
+                15: [
+                    { event_time: '09:00:00', title: 'AllVets QA Due', event_type: 'deadline' }
+                ],
+                18: [
+                    { event_time: '10:30:00', title: 'Team Standup', event_type: 'meeting' },
+                    { event_time: '14:00:00', title: 'Code Review', event_type: 'task' }
+                ]
+            };
 
             let emptyBefore = 0;
             for (let i = 0; i < emptyBefore; i++) {
@@ -189,12 +185,13 @@
                 dayNum.textContent = day;
                 cell.appendChild(dayNum);
 
-                if (eventMap[day]) {
-                    eventMap[day].forEach(event => {
+                if (testEvents[day]) {
+                    testEvents[day].forEach(event => {
                         const eventEl = document.createElement('div');
-                        eventEl.className = 'cal-event';
+                        eventEl.className = 'cal-event ' + (event.event_type || 'meeting');
                         const time = event.event_time ? event.event_time.substring(0, 5) : '';
                         eventEl.textContent = (time ? time + ' ' : '') + event.title;
+                        eventEl.title = event.title + (time ? ' @ ' + time : '');
                         cell.appendChild(eventEl);
                     });
                 }
@@ -209,7 +206,7 @@
             }
         }
 
-        loadCalendar();
+        renderCalendar();
     </script>
 </body>
 </html>
