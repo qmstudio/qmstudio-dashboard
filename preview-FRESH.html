@@ -16,10 +16,7 @@
         .cal-today { background: #dcfce7; color: #059669; font-weight: 700; border: 2px solid #10b981; }
         .cal-header { aspect-ratio: auto; height: 1.05rem; background: #f3f4f6; font-weight: 600; display: flex; align-items: center; justify-content: center; border: 1px solid #e5e7eb; font-size: 0.7rem; }
         .cal-day-num { font-weight: 600; font-size: 0.8rem; margin-bottom: 0.1rem; }
-        .cal-event { font-size: 0.5rem; line-height: 1; padding: 0.05rem 0.1rem; margin: 0.05rem 0; border-radius: 1px; color: white; background: #3b82f6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
-        .cal-event.meeting { background: #10b981; }
-        .cal-event.deadline { background: #ef4444; }
-        .cal-event.task { background: #f59e0b; }
+        .cal-event { font-size: 0.5rem; line-height: 1; padding: 0.05rem 0.1rem; margin: 0.05rem 0; border-radius: 1px; color: white; background: #10b981; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
     </style>
 </head>
 <body>
@@ -134,15 +131,7 @@
 
                     <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #e5e5e5;">
                         <h2 style="font-family: Playfair Display, serif; font-size: 1.25rem; color: #1f2937; margin: 0 0 1.5rem 0; text-align: center;">March</h2>
-                        <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0; border: 1px solid #e5e7eb; border-radius: 4px; overflow: hidden;" id="calendar">
-                            <div class="cal-header">SUN</div>
-                            <div class="cal-header">MON</div>
-                            <div class="cal-header">TUE</div>
-                            <div class="cal-header">WED</div>
-                            <div class="cal-header">THU</div>
-                            <div class="cal-header">FRI</div>
-                            <div class="cal-header">SAT</div>
-                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0; border: 1px solid #e5e7eb; border-radius: 4px; overflow: hidden;" id="calendar"></div>
                     </div>
                 </div>
             </div>
@@ -150,67 +139,77 @@
     </div>
 
     <script>
-        const supabaseUrl = 'https://bhfbjefntsecfqlgepo.supabase.co';
-        const supabaseKey = 'sb_publishable_felu1qhq2V9OeYc2_XAygQ_b5ku1K0M';
-        const { createClient } = window.supabase;
-        const supabase = createClient(supabaseUrl, supabaseKey);
+        async function loadCalendar() {
+            const calendar = document.getElementById('calendar');
+            const headers = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+            
+            headers.forEach(day => {
+                const header = document.createElement('div');
+                header.className = 'cal-header';
+                header.textContent = day;
+                calendar.appendChild(header);
+            });
 
-        async function renderCalendar() {
+            let eventMap = {};
+
             try {
-                const { data: events, error } = await supabase.from('calendar_events').select('*').gte('event_date', '2026-03-01').lte('event_date', '2026-03-31');
+                const { createClient } = window.supabase;
+                const supabase = createClient('https://bhfbjefntsecfqlgepo.supabase.co', 'sb_publishable_felu1qhq2V9OeYc2_XAygQ_b5ku1K0M');
                 
-                if (error) console.error('Error:', error);
-
-                const eventMap = {};
-                if (events) {
+                const { data: events, error } = await supabase.from('calendar_events').select('*');
+                
+                if (error) {
+                    console.error('Supabase error:', error);
+                } else if (events) {
                     events.forEach(event => {
                         const day = new Date(event.event_date).getDate();
                         if (!eventMap[day]) eventMap[day] = [];
                         eventMap[day].push(event);
                     });
+                    console.log('Loaded events:', events);
                 }
+            } catch (err) {
+                console.error('Error loading Supabase:', err);
+            }
 
-                const calendar = document.getElementById('calendar');
-                const cells = calendar.querySelectorAll('.cal-header');
+            let emptyBefore = 6;
+            for (let i = 0; i < emptyBefore; i++) {
                 const emptyCell = document.createElement('div');
                 emptyCell.className = 'cal-cell cal-empty';
                 calendar.appendChild(emptyCell);
+            }
 
-                for (let day = 1; day <= 31; day++) {
-                    const cell = document.createElement('div');
-                    const isToday = day === 10;
-                    cell.className = 'cal-cell' + (isToday ? ' cal-today' : '');
-                    
-                    const dayNum = document.createElement('div');
-                    dayNum.className = 'cal-day-num';
-                    dayNum.textContent = day;
-                    cell.appendChild(dayNum);
+            for (let day = 1; day <= 31; day++) {
+                const cell = document.createElement('div');
+                const isToday = day === 10;
+                cell.className = 'cal-cell' + (isToday ? ' cal-today' : '');
+                
+                const dayNum = document.createElement('div');
+                dayNum.className = 'cal-day-num';
+                dayNum.textContent = day;
+                cell.appendChild(dayNum);
 
-                    if (eventMap[day]) {
-                        eventMap[day].forEach(event => {
-                            const eventEl = document.createElement('div');
-                            eventEl.className = 'cal-event ' + (event.event_type || 'meeting');
-                            const time = event.event_time ? event.event_time.substring(0, 5) : '';
-                            eventEl.textContent = (time ? time + ' ' : '') + event.title;
-                            eventEl.title = event.title + (time ? ' @ ' + time : '');
-                            cell.appendChild(eventEl);
-                        });
-                    }
-
-                    calendar.appendChild(cell);
+                if (eventMap[day]) {
+                    eventMap[day].forEach(event => {
+                        const eventEl = document.createElement('div');
+                        eventEl.className = 'cal-event';
+                        const time = event.event_time ? event.event_time.substring(0, 5) : '';
+                        eventEl.textContent = (time ? time + ' ' : '') + event.title;
+                        cell.appendChild(eventEl);
+                    });
                 }
 
-                for (let i = 0; i < 3; i++) {
-                    const emptyCell2 = document.createElement('div');
-                    emptyCell2.className = 'cal-cell cal-empty';
-                    calendar.appendChild(emptyCell2);
-                }
-            } catch (err) {
-                console.error('Calendar error:', err);
+                calendar.appendChild(cell);
+            }
+
+            for (let i = 0; i < 3; i++) {
+                const emptyCell = document.createElement('div');
+                emptyCell.className = 'cal-cell cal-empty';
+                calendar.appendChild(emptyCell);
             }
         }
 
-        renderCalendar();
+        loadCalendar();
     </script>
 </body>
 </html>
